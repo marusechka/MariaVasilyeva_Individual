@@ -54,8 +54,8 @@ int main(int argc, char argv[])
 	setlocale(LC_ALL, "Russian");
 	float PI = 3.14159265358979323846;
 	double I; // результат вычисление интеграла
-	const int a = 0, b = 1; // пределы интегрирования
-	const int m = 1000000; // число разбиений
+	double a = 0, b = 1; // пределы интегрирования
+	int m = 1000000; // число разбиений
 	float chisl = (2 * PI) / 3;
 
 	printf("\nЧисло разбиений  = %i\n", m);
