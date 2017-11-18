@@ -25,7 +25,7 @@ double Parallel_Rect_Solve(double(*Fx)(double), double a, double b, int m)
 {
 	double h = (b - a) / m; // шаг разбиения
 	cilk::reducer_opadd<double>Sum(0.0);
-	cilk_for(int i = 0; i < m - 1; ++i)
+	cilk_for(int i = 0; i <= m-1; ++i)
 	{
 		Sum += Fx(a + i * h);
 	}
@@ -41,7 +41,7 @@ double Serial_Rect_Solve(double(*Fx)(double), double a, double b, int m)
 {
 	double h = (b - a) / m; // шаг разбиения
 	double Sum = 0;
-	for (int i = 0; i < m - 1; ++i)
+	for (int i = 0; i <= m-1; ++i)
 	{
 		Sum += Fx(a + i * h);
 	}
@@ -54,8 +54,8 @@ int main(int argc, char argv[])
 	setlocale(LC_ALL, "Russian");
 	float PI = 3.14159265358979323846;
 	double I; // результат вычисление интеграла
-	double a = 0, b = 1; // пределы интегрирования
-	int m = 1000000; // число разбиений
+	int a = 0, b = 1; // пределы интегрирования
+	int m = 1000000000; // число разбиений
 	float chisl = (2 * PI) / 3;
 
 	printf("\nЧисло разбиений  = %i\n", m);
@@ -78,10 +78,10 @@ int main(int argc, char argv[])
 	t2 = high_resolution_clock::now();
 	duration<double> duration_parallel = (t2 - t1);
 
-	std::cout <<"\nВремя вычисления интеграла параллельно: " << duration_parallel.count() << " се-кунд\n" << std::endl;
+	std::cout <<"\nВремя вычисления интеграла параллельно: " << duration_parallel.count() << " секунд\n" << std::endl;
 	printf("Значение интеграла, вычисленного     параллельно = %.22f\n", I);
 	printf("\nОшибка вычисления = %.22f\n", chisl-I);
 	printf("\nПроизводительность = %.4f\n", duration_serial.count() / duration_parallel.count());
 
-	system("pause");
+	_getch();
 }
